@@ -1,74 +1,39 @@
-title 0.4: new note
+```mermaid
+sequenceDiagram
+    participant browser
+    participant server
 
-note left of browser:
-user open page 
-end note
+    Note over browser: <br/>User writes in the text field and clicks the Save button
 
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
-server-->browser: HTML-code
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
-server-->browser: main.css
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
-server-->browser: main.js
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate server
+    Note left of server:<br/>Server saves the new note to a database or array
+    server-->>browser: HTTP 302 Found (URL redirects to: /exampleapp/notes)
+    deactivate server
 
-note over browser: 
-browser starts 
-executing js-code 
-that requests JSON 
-data from server
-end note
+    Note over browser: <br/>Browser reloads the notes page due to the redirect
 
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-server-->browser: JSON file content: [{content: "",date: "2021-06-01T20:05:31.930Z"}, ...]
-browser->server: HTTP GET https://studies.cs.helsinki.fi/favicon.ico
-server-->browser: favicon.ico
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document
+    deactivate server
 
-note over browser: 
-browser executes 
-the event handler 
-that renders notes 
-to display
-end note
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the css file
+    deactivate server
 
-note right of browser:
--------- excersise 0.4 part --------
-end note
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: the JavaScript file
+    deactivate server
 
-note left of browser: 
-user makes new note 
-and click save button
-end note
+    Note right of browser: <br/>Browser starts executing JS code that fetches JSON
 
-browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "", "date": "2026-01-17T18:23:56.255Z" }, ... ][
+    deactivate server
 
-note over server: 
-server add new note 
-to the notes page
-end note
-
-server-->browser: HTML status code 302 (URL redirect)
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
-server-->browser: HTML-code
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
-server-->browser: main.css
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
-server-->browser: main.js
-
-note over browser: 
-browser starts 
-executing js-code 
-that requests JSON 
-data from server
-end note
-
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-server-->browser: JSON file content: [{content: "cryofrain",date: "2021-06-01T21:12:02.363Z"}, ...]
-browser->server: HTTP GET https://studies.cs.helsinki.fi/favicon.ico
-server-->browser: favicon.ico
-
-note over browser: 
-browser executes 
-the event handler 
-that renders notes 
-to display
-end note
+    Note right of browser: <br/>Browser executes callback and renders the updated list
+```

@@ -36,12 +36,27 @@ const App = () => {
 
         const exist = persons.find(person => person.name.trim() === newName.trim())
         if(exist){
-            alert(`${newName} is already added to phonebook`)
+            // alert(`${newName} is already added to phonebook`)
+            // return
+            if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
+                const changedPerson = {...exist,number:newPhone}
+                personService.update(changedPerson.id,changedPerson).then(
+                    //person is a returned new object
+                    person=>{
+                        setPersons(persons.map(
+                            p => p.id !== exist.id ? p : person
+
+                        ))
+                        setNewName('')
+                        setNewPhone('')
+                    }
+                )
+            }
             return
         }
         const personObject = {
             name:newName,
-            phone:newPhone
+            number:newPhone
         }
         personService.create(personObject).then(
             person=>{

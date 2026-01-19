@@ -43,17 +43,20 @@ const App = () => {
             name:newName,
             phone:newPhone
         }
-        setPersons(persons.concat(personObject))
-        //empty the input
-        setNewName('')
-        setNewPhone('')
+        personService.create(personObject).then(
+            person=>{
+                setPersons(persons.concat(person))
+                setNewName('')
+                setNewPhone('')
+            }
+        )
     }
     const deletePerson = (id)=>{
         personService.remove(id).then(()=>{
             setPersons(persons.filter(person => person.id !== id))
         })
     }
-    console.log('Filtered persons to show:', personsToShow)
+    // console.log('Filtered persons to show:', personsToShow)
     return (
         <div>
             <h1>Phonebook</h1>
@@ -61,13 +64,13 @@ const App = () => {
             <h2>
                 Add a new
             </h2>
-            <PersonForm>
+            <PersonForm
                 onSubmit={addPerson}
                 nameValue={newName}
                 onNameChange={handleNameChange}
                 phoneValue={newPhone}
                 onPhoneChange={handlePhoneChange}
-            </PersonForm>
+            />
 
             <h2>Numbers</h2>
             <Persons personsToShow={personsToShow} deletePerson={deletePerson} />

@@ -3,7 +3,7 @@ import DeleteButton from "./DeleteButton.jsx";
 
 const Person = ({ person,deletePerson }) =>(
     <li>
-        {person.name} {person.phone}
+        {person.name} {person.number}
         <DeleteButton
             name={person.name}
             onClick={()=>{
@@ -17,7 +17,8 @@ const Persons = ({personsToShow,deletePerson})=>{
         <ul>
             {personsToShow.map(person=>
                 <Person
-                    key={person.id} person={person}
+                    key={person.id}
+                    person={person}
                     deletePerson={deletePerson}
                 />
             )}

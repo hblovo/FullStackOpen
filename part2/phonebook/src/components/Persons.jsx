@@ -1,13 +1,25 @@
 import React from "react";
+import DeleteButton from "./DeleteButton.jsx";
 
-const Person = ({ person }) => <li>{person.name} {person.phone}</li>
-const Persons = ({personsToShow})=>{
+const Person = ({ person,deletePerson }) =>(
+    <li>
+        {person.name} {person.phone}
+        <DeleteButton
+            name={person.name}
+            onClick={()=>{
+                deletePerson(person.id,person.name)
+            }}>
+        </DeleteButton>
+    </li>
+)
+const Persons = ({personsToShow,deletePerson})=>{
     return(
         <ul>
-            {/*{persons.map(person=>*/}
-            {/*    <Person key={person.name} person={person} />*/}
-            {/*)}*/}
-            {personsToShow.map(person=><Person key={person.id} person={person} />
+            {personsToShow.map(person=>
+                <Person
+                    key={person.id} person={person}
+                    deletePerson={deletePerson}
+                />
             )}
         </ul>
     )

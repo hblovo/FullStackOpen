@@ -8,5 +8,8 @@ const getAll = () => {
 const create = newObject => {
     return axios.post(baseUrl, newObject).then(response => response.data)
 }
+const remove = (id)=>{
+    return axios.delete(`${baseUrl}/${id}`).then(response => response.data)
 
-export default { getAll, create }
+}
+export default { getAll, create,remove }

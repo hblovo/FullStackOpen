@@ -3,12 +3,15 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import personService from './services/persons'
-
+import Notification from "./components/Notification.jsx";
+import './index.css'
 const App = () => {
     const [persons, setPersons] = useState([])
     const [ newName, setNewName ] = useState('')
     const [ newPhone,setNewPhone] = useState('')
     const [ filter,setFilter] = useState('')
+    const [infoMessage,setInfoMessage] = useState(null)
+    const [messageType,setMessageType] = useState('success')
     const personsToShow = filter === '' ? persons
         :persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
 
@@ -45,12 +48,18 @@ const App = () => {
                     person=>{
                         setPersons(persons.map(
                             p => p.id !== exist.id ? p : person
-
                         ))
+                        setTimeout( () => setInfoMessage(null),3000)
                         setNewName('')
                         setNewPhone('')
                     }
-                )
+                ).catch(error=>{
+                    console.log(error)
+                    setMessageType('error')
+                    setInfoMessage(`Information of '${exist.name}' has already been removed from server`)
+                    setTimeout( () => setInfoMessage(null),3000)
+                    setPersons(persons.filter(person=>person.id !== exist.id))
+                })
             }
             return
         }
@@ -63,6 +72,8 @@ const App = () => {
                 setPersons(persons.concat(person))
                 setNewName('')
                 setNewPhone('')
+                setInfoMessage(`Added ${personObject.name}`)
+                setTimeout( () => setInfoMessage(null),3000)
             }
         )
     }
@@ -75,6 +86,7 @@ const App = () => {
     return (
         <div>
             <h1>Phonebook</h1>
+            <Notification message={infoMessage} type={messageType}/>
             <Filter value={filter} onChange={handleFilterChange} />
             <h2>
                 Add a new

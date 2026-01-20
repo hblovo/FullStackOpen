@@ -96,6 +96,24 @@ app.post('/api/persons',(request,response)=>{
         })
     })
 })
+app.put('/api/persons/:id',(request,response)=>{
+    const body = request.body
+    const id = request.params.id
+    const person = {
+        name:body.name,
+        number:body.number
+    }
+    Person.findByIdAndUpdate(id,person,{ new: true }).then(person=>{
+        if(person){
+            response.json(person)
+        }else{
+            response.status(404).end()
+        }
+    }).catch(err=>{
+        console.log(err)
+        response.status(404).end()
+    })
+})
 app.get('/info',(request, response) => {
     const date = new Date()
     const count = persons.length

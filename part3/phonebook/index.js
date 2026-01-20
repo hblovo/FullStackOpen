@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-
+app.use(express.json())
 let persons = [
     {
         "id": 1,
@@ -29,6 +29,44 @@ app.get('/',(request, response) => {
 })
 app.get('/api/persons',(request, response) => {
     response.json(persons)
+})
+app.get('/api/persons/:id',(request, response) => {
+    const id = request.params.id
+    const note = persons.find(p => String(p.id) === id )
+    if(note){
+        console.log(note)
+        response.json(note)
+    }else{
+        response.status(404).end()
+    }
+
+})
+app.delete('/api/persons/:id',(request, response) => {
+    const id = request.params.id
+    persons = persons.filter(p => String(p.id) !== id)
+    response.status(204).end()
+})
+app.post('/api/persons',(request,response)=>{
+    const body = request.body
+    if(!body.name || !body.number){
+        return response.status(400).json({
+            error: 'Missing info'
+        })
+    }
+    const exist = persons.find(p => p.name === body.name)
+    if(exist){
+        return response.status(400).json({
+            error: 'name must be unique'
+        })
+    }
+    const randomID = Math.floor(Math.random() * 1000000)
+    const person = {
+        id:String(randomID),
+        name:body.name,
+        number:body.number
+    }
+    persons = persons.concat(person)
+    response.json(person)
 })
 app.get('/info',(request, response) => {
     const date = new Date()

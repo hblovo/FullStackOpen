@@ -10,7 +10,11 @@ app.use(express.static('dist'))
 
 //define the port using dotenv
 const PORT = Number(process.env.PORT) || 3001
-
+const errorHandler = (error,request,response,next)=>{
+    console.log(error.message)
+    next(error)
+}
+app.use(errorHandler)
 app.listen(PORT,()=>{
     console.log(`Server running on port ${PORT}`)
 })
@@ -52,7 +56,7 @@ app.get('/api/persons', (request, response) => {
     })
 })
 
-app.get('/api/persons/:id',(request, response) => {
+app.get('/api/persons/:id',(request, response,next) => {
     const id = request.params.id
     Person.findById(id).then(person=>{
         if(person){
@@ -61,17 +65,15 @@ app.get('/api/persons/:id',(request, response) => {
             response.status(404).end()
         }
     }).catch(err=>{
-        console.log(err)
-        response.status(404).end()
+        next(err)
     })
 })
-app.delete('/api/persons/:id',(request, response) => {
+app.delete('/api/persons/:id',(request, response,next) => {
     const id = request.params.id
     Person.findByIdAndDelete(id).then(()=>{
         response.status(204).end()
     }).catch(err=>{
-        console.log(err)
-        response.status(404).end()
+        next(err)
     })
 })
 app.post('/api/persons',(request,response)=>{
@@ -96,7 +98,7 @@ app.post('/api/persons',(request,response)=>{
         })
     })
 })
-app.put('/api/persons/:id',(request,response)=>{
+app.put('/api/persons/:id',(request,response,next)=>{
     const body = request.body
     const id = request.params.id
     const person = {
@@ -110,17 +112,16 @@ app.put('/api/persons/:id',(request,response)=>{
             response.status(404).end()
         }
     }).catch(err=>{
-        console.log(err)
-        response.status(404).end()
+        next(err)
     })
 })
 app.get('/info',(request, response) => {
     const date = new Date()
-    const count = persons.length
-    console.log(count)
-    const content = `
+    Person.countDocuments({}).then(count=>{
+        const content = `
         <p>Phonebook has info for ${count} people</p>
         <p>${date}</p>
     `
-    response.send(content)
+        response.send(content)
+    })
 })

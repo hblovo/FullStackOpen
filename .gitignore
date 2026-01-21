@@ -1,1 +1,4 @@
-/part3/phonebook/node_modules/
+node_modules/
+.env
+dist/
+build/

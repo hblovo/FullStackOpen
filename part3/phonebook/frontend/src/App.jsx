@@ -75,7 +75,12 @@ const App = () => {
                 setInfoMessage(`Added ${personObject.name}`)
                 setTimeout( () => setInfoMessage(null),3000)
             }
-        )
+        ).catch(error=>{
+            console.log(error)
+            setMessageType('error')
+            setInfoMessage(error.response.data.error)
+            setTimeout( () => setInfoMessage(null),3000)
+        })
     }
     const deletePerson = (id)=>{
         personService.remove(id).then(()=>{

@@ -22,4 +22,23 @@ blogsRouter.post('/',async (request, response, next) => {
     }
 
 })
+blogsRouter.delete('/:id', async (request, response, next) => {
+    try {
+        const id = request.params.id
+        await Blog.findByIdAndDelete(id)
+        response.status(204).end()
+    } catch (exception) {
+        next(exception)
+    }
+})
+blogsRouter.put('/:id', async (request, response) => {
+    const { likes } = request.body // 这里的 likes 必须对应前端传来的属性名
+    const updatedBlog = await Blog.findByIdAndUpdate(
+        request.params.id,
+        {likes : likes},
+        {new : true}
+    )
+
+    response.json(updatedBlog)
+})
 module.exports = blogsRouter

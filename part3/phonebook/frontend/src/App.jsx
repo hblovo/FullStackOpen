@@ -56,9 +56,19 @@ const App = () => {
                 ).catch(error=>{
                     console.log(error)
                     setMessageType('error')
-                    setInfoMessage(`Information of '${exist.name}' has already been removed from server`)
+                    //validator error
+                    if (error.response && error.response.data && error.response.data.error) {
+                        setInfoMessage(error.response.data.error)
+                    } else {
+                        setInfoMessage(`Information of '${exist.name}' has already been removed from server`)
+                        setPersons(persons.filter(p => p.id !== exist.id))
+                    }
+
                     setTimeout( () => setInfoMessage(null),3000)
-                    setPersons(persons.filter(person=>person.id !== exist.id))
+                    if (error.response && error.response.status !== 400){
+                        setPersons(persons.filter(person=>person.id !== exist.id))
+                    }
+
                 })
             }
             return

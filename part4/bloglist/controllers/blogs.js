@@ -54,7 +54,7 @@ blogsRouter.delete('/:id', async (request, response, next) => {
     }
 })
 blogsRouter.put('/:id', async (request, response) => {
-    const { likes } = request.body // 这里的 likes 必须对应前端传来的属性名
+    const { likes } = request.body
     const updatedBlog = await Blog.findByIdAndUpdate(
         request.params.id,
         {likes : likes},

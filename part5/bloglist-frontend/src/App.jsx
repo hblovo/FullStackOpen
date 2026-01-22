@@ -6,6 +6,7 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Notification from "./components/Notification.jsx";
 import './index.css'
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username,setUsername] = useState('')
@@ -14,12 +15,21 @@ const App = () => {
   const [notification, setNotificaiton] = useState(null)
   const [notificationType, setNotificationType] = useState('success')
   const [blogVisible, setBlogVisible] = useState(false)
-  const notify = (message,type='success')=>{
-    setNotificationType(type)
-    setNotificaiton(message)
-    setTimeout(()=>{
-      setNotificaiton(null)
-    },3000)
+  const blogForm = () => {
+    const hideWhenVisible = { display: blogVisible ? 'none' : '' }
+    const showWhenVisible = { display: blogVisible ? '' : 'none' }
+
+    return (
+        <div>
+          <div style={hideWhenVisible}>
+            <button onClick={() => setBlogVisible(true)}>new blog</button>
+          </div>
+          <div style={showWhenVisible}>
+            <BlogForm createBlog={createBlog} />
+            <button onClick={() => setBlogVisible(false)}>cancel</button>
+          </div>
+        </div>
+    )
   }
   useEffect(()=>{
     const loggedUser = localStorage.getItem('loggedUser')
@@ -34,6 +44,13 @@ const App = () => {
       setBlogs( blogs )
     )  
   }, [])
+  const notify = (message,type='success')=>{
+    setNotificationType(type)
+    setNotificaiton(message)
+    setTimeout(()=>{
+      setNotificaiton(null)
+    },3000)
+  }
   const handleLogin = async (event)=>{
     event.preventDefault()
     try{
@@ -55,22 +72,6 @@ const App = () => {
     window.localStorage.removeItem('loggedUser')
     setUser(null)
   }
-  const blogForm = () => {
-    const hideWhenVisible = { display: blogVisible ? 'none' : '' }
-    const showWhenVisible = { display: blogVisible ? '' : 'none' }
-
-    return (
-        <div>
-          <div style={hideWhenVisible}>
-            <button onClick={() => setBlogVisible(true)}>new blog</button>
-          </div>
-          <div style={showWhenVisible}>
-            <BlogForm createBlog={createBlog} />
-            <button onClick={() => setBlogVisible(false)}>cancel</button>
-          </div>
-        </div>
-    )
-  }
   const createBlog = async (newBlog)=>{
     try{
       const returnedBlog = await blogService.createBlog(newBlog)
@@ -83,7 +84,7 @@ const App = () => {
       notify('failed to create blog', 'error')
     }
   }
-  const updateLikes = async(id, blog)=>{
+  const handleUpdateLikes = async(id, blog)=>{
     try{
       const updatedBlog = await blogService.updateBlog(id, blog)
       setBlogs(blogs.map(blog=> blog.id !== id ? blog : { ...updatedBlog, user: blog.user }))
@@ -91,6 +92,19 @@ const App = () => {
       notify('could not update likes',err)
     }
   }
+  const handleDeleteBlog = async(blog)=>{
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
+      try {
+        await blogService.deleteBlog(blog.id)
+        setBlogs(blogs.filter(b => b.id !== blog.id)) // 从状态中过滤掉
+        notify(`Blog ${blog.title} removed`, 'success')
+      } catch (err) {
+        console.log(err)
+        notify('failed to remove blog', 'error')
+      }
+    }
+  }
+  const sortedBlogs = [...blogs].sort((a,b) => b.likes - a.likes)
   if(user === null){
     return(
         <div>
@@ -111,7 +125,15 @@ const App = () => {
           <Notification message={notification} type={notificationType} />
           <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
           {blogForm()}
-          {blogs.map(blog => <Blog key={blog.id} blog={blog} updateLikes={updateLikes} />)}
+          {sortedBlogs.map(blog =>
+              <Blog
+                  key={blog.id}
+                  blog={blog}
+                  updateLikes={handleUpdateLikes}
+                  deleteBlog={handleDeleteBlog}
+                  user={user}
+              />
+          )}
         </div>
     )
   }

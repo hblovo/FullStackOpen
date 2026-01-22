@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="44641d82-ee90-4e8d-b29a-92db8b7a8b49" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/blogs.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/blogs.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/App.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/components/Blog.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/components/Blog.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/services/blogs.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/services/blogs.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +74,7 @@
       <option name="presentableId" value="Default" />
       <updated>1768983168414</updated>
       <workItem from="1768983169856" duration="39813000" />
-      <workItem from="1769088059271" duration="3409000" />
+      <workItem from="1769088059271" duration="4849000" />
     </task>
     <servers />
   </component>

@@ -83,6 +83,14 @@ const App = () => {
       notify('failed to create blog', 'error')
     }
   }
+  const updateLikes = async(id, blog)=>{
+    try{
+      const updatedBlog = await blogService.updateBlog(id, blog)
+      setBlogs(blogs.map(blog=> blog.id !== id ? blog : { ...updatedBlog, user: blog.user }))
+    }catch (err){
+      notify('could not update likes',err)
+    }
+  }
   if(user === null){
     return(
         <div>
@@ -103,7 +111,7 @@ const App = () => {
           <Notification message={notification} type={notificationType} />
           <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
           {blogForm()}
-          {blogs.map(blog => <Blog key={blog.id} blog={blog} />)}
+          {blogs.map(blog => <Blog key={blog.id} blog={blog} updateLikes={updateLikes} />)}
         </div>
     )
   }

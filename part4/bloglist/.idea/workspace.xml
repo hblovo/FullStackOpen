@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="44641d82-ee90-4e8d-b29a-92db8b7a8b49" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/components/test/Blog.test.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/components/test/BlogForm.test.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/testSetup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/blogs.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/blogs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/components/Blog.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/components/Blog.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/services/blogs.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/services/blogs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/components/BlogForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/components/BlogForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/vite.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

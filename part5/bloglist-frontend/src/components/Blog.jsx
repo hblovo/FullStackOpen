@@ -37,7 +37,7 @@ const Blog = ({ blog,updateLikes,deleteBlog,user }) => {
       </div>
 
 
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className={'showWhenVisible'}>
         <div>{blog.url}</div>
         <div>
             likes {blog.likes}

@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="44641d82-ee90-4e8d-b29a-92db8b7a8b49" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/components/Blog.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/bloglist-frontend/src/components/Blog.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../part5/tests/example.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../part5/tests/example.spec.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +73,7 @@
       <option name="presentableId" value="Default" />
       <updated>1768983168414</updated>
       <workItem from="1768983169856" duration="39813000" />
-      <workItem from="1769088059271" duration="4849000" />
+      <workItem from="1769088059271" duration="6422000" />
     </task>
     <servers />
   </component>

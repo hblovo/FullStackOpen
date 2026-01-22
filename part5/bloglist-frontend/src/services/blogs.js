@@ -7,24 +7,24 @@ const getAll = () => {
 }
 let token = null
 
-const setToken = (newToken)=>{
+const setToken = (newToken) => {
   token = `Bearer ${newToken}`
 }
 
-const createBlog = async(blog)=>{
+const createBlog = async(blog) => {
   const config = {
-    headers: {Authorization: token},
+    headers: { Authorization: token },
   }
 
   const response = await axios.post(baseUrl,blog,config)
   return response.data
 }
-const updateBlog = async(id,blog)=>{
+const updateBlog = async(id,blog) => {
   const response = await axios.put(`${baseUrl}/${id}`, blog)
   return response.data
 }
-const deleteBlog = async(id)=>{
+const deleteBlog = async(id) => {
   const response = await axios.delete(`${baseUrl}/${id}`)
   return response.data
 }
-export default { getAll , createBlog , setToken, updateBlog , deleteBlog}
+export default { getAll , createBlog , setToken, updateBlog , deleteBlog }

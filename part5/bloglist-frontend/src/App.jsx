@@ -13,6 +13,7 @@ const App = () => {
   const [user,setUser] = useState(null)
   const [notification, setNotificaiton] = useState(null)
   const [notificationType, setNotificationType] = useState('success')
+  const [blogVisible, setBlogVisible] = useState(false)
   const notify = (message,type='success')=>{
     setNotificationType(type)
     setNotificaiton(message)
@@ -54,10 +55,27 @@ const App = () => {
     window.localStorage.removeItem('loggedUser')
     setUser(null)
   }
+  const blogForm = () => {
+    const hideWhenVisible = { display: blogVisible ? 'none' : '' }
+    const showWhenVisible = { display: blogVisible ? '' : 'none' }
+
+    return (
+        <div>
+          <div style={hideWhenVisible}>
+            <button onClick={() => setBlogVisible(true)}>new blog</button>
+          </div>
+          <div style={showWhenVisible}>
+            <BlogForm createBlog={createBlog} />
+            <button onClick={() => setBlogVisible(false)}>cancel</button>
+          </div>
+        </div>
+    )
+  }
   const createBlog = async (newBlog)=>{
     try{
       const returnedBlog = await blogService.createBlog(newBlog)
       setBlogs(blogs.concat(returnedBlog))
+      setBlogVisible(false)
       notify(`a new blog ${newBlog.title} added by ${newBlog.author}`, 'success')
       console.log(returnedBlog)
     }catch (err){
@@ -84,8 +102,7 @@ const App = () => {
           <h2>blogs</h2>
           <Notification message={notification} type={notificationType} />
           <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
-          <BlogForm createBlog={createBlog} />
-
+          {blogForm()}
           {blogs.map(blog => <Blog key={blog.id} blog={blog} />)}
         </div>
     )

@@ -1,41 +1,72 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import {CountryDetail,Content} from "./components/Content.jsx";
+import { CountryDetail } from "./components/Content.jsx"
 
+const useField = (type) => {
+    const [value, setValue] = useState('')
+    const onChange = (event) => setValue(event.target.value)
+    return { type, value, onChange }
+}
+
+const useCountry = (name) => {
+    const [country, setCountry] = useState(null)
+
+    useEffect(() => {
+        if (!name) {
+            setCountry(null)
+            return
+        }
+
+        axios
+            .get(`https://studies.cs.helsinki.fi/restcountries/api/name/${name}`)
+            .then(response => {
+                setCountry({ data: response.data, found: true })
+            })
+            .catch(error => {
+                setCountry({ found: false })
+            })
+    }, [name])
+
+    return country
+}
 
 const App = () => {
-    const [query, setQuery] = useState('')
-    const [countries, setCountries] = useState([])
-    const [selectedCountry,setSelectedCountry] = useState(null)
+    const nameInput = useField('text')
+    const [name, setName] = useState('')
 
-    // 1. 获取所有国家数据 (Fetch all countries)
-    useEffect(() => {
-        axios
-            .get('https://studies.cs.helsinki.fi/restcountries/api/all')
-            .then(response => {
-                setCountries(response.data)
-                console.log(response.data)
-            })
-    }, [])
+    const country = useCountry(name)
 
-    const handleQueryChange = (event) => {
-        setQuery(event.target.value)
-        setSelectedCountry(null)
+    const fetch = (e) => {
+        e.preventDefault()
+        setName(nameInput.value)
     }
-
-    // 2. 过滤逻辑 (Filtering logic)
-    const countriesToShow = query === ''
-        ? []
-        : countries.filter(c => c.name.common.toLowerCase().includes(query.toLowerCase()))
 
     return (
         <div>
-            find countries <input value={query} onChange={handleQueryChange} />
-            {selectedCountry ?
-                (<CountryDetail country={selectedCountry} />) :
-                (<Content countries={countriesToShow} setCountry={setSelectedCountry}/>)
-            }
+            <form onSubmit={fetch}>
+                find countries <input {...nameInput} />
+                <button type="submit">find</button>
+            </form>
+
+            <Country country={country} />
         </div>
     )
 }
+
+const Country = ({ country }) => {
+    if (!country) return null
+
+    if (!country.found) {
+        return <div>not found...</div>
+    }
+    return (
+        <div>
+            <h3>{country.data.name.common} </h3>
+            <div>capital {country.data.capital[0]} </div>
+            <div>population {country.data.population} </div>
+            <img src={country.data.flags.png} height='100' alt={`flag of ${country.data.name.common}`}/>
+        </div>
+    )
+}
+
 export default App
